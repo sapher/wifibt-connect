@@ -1,0 +1,9 @@
+__pycache__
+.docker
+.docs
+.vscode
+venv
+.editorconfig
+.gitignore
+.pylintrc
+*.code-workspace

@@ -1,0 +1,12 @@
+version: "3"
+
+services:
+  net-connect:
+    build:
+      dockerfile: Dockerfile
+      context: ..
+    network_mode: "host"
+    cap_add:
+      - NET_ADMIN
+    environment:
+      DBUS_SYSTEM_BUS_ADDRESS: "unix:path=/host/run/dbus/system_bus_socket"

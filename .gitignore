@@ -1,0 +1,11 @@
+venv
+.vscode
+*.code-workspace
+__pycache__
+__backup
+_*.py
+!__init__.py
+_bt
+.idea
+android
+ios
