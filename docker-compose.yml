@@ -1,0 +1,12 @@
+version: "3"
+
+services:
+  wifibt-connect:
+    build:
+      dockerfile: Dockerfile
+      context: .
+    network_mode: host
+    cap_add:
+      - NET_ADMIN
+    volumes:
+      - /var/run/dbus:/var/run/dbus
