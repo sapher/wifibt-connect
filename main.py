@@ -1,10 +1,11 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 import signal
 import dbus
 from gi.repository import GLib
 import log
 from ble.advertising_main import advertising_main
 from ble.gatt_server_main import gatt_server_main
+from ble.agent_main import agent_main
 
 
 def bootstrap():
@@ -23,6 +24,7 @@ def bootstrap():
     adapter_name = ""
     advertising_main(loop, bus, adapter_name)
     gatt_server_main(loop, bus, adapter_name)
+    agent_main(loop, bus)
 
     # Trap sigint signal for program termination
     def ex(_sig, _frame):

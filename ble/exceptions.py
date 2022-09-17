@@ -1,6 +1,7 @@
 """
 DBus exceptions for Bluez
 """
+import dbus
 import dbus.exceptions
 
 
