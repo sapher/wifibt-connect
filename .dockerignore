@@ -2,6 +2,7 @@ __pycache__
 .docker
 .docs
 .vscode
+.github
 venv
 .editorconfig
 .gitignore

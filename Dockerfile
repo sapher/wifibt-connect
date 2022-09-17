@@ -1,23 +1,24 @@
-FROM ubuntu:jammy
+FROM python:3.9-slim-buster
 
-ARG DEBIAN_FRONTEND=noninteractive
-
-ENV TZ="Etc/UTC"
+ARG PYGOBJECT_WITHOUT_PYCAIRO=1
 
 WORKDIR /usr/app
 
+RUN apt-get update -qq
+
+RUN apt-get install --no-install-recommends -y \
+    build-essential \
+    cmake \
+    autoconf \
+    dbus \
+    libdbus-1-dev \
+    libglib2.0-dev \
+    libgirepository1.0-dev
+
 COPY . .
 
-RUN apt-get update -qq && \
-    apt-get install -y -qq \
-        pkgconf \
-        network-manager \
-        libglib2.0-dev \
-        libboost-python-dev \
-        libboost-thread-dev \
-        libbluetooth-dev \
-        bluez \
-        python3-pip && \
-    pip3 install python-networkmanager
+RUN pip3 install --no-build-isolation -r requirements.txt
+
+RUN apt-get remove build-essential cmake autoconf -y
 
 CMD ["python3", "/usr/app/main.py"]
