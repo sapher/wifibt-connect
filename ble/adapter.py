@@ -16,8 +16,11 @@ class Adapter:
         self.adapter_props = dbus.Interface(
             self.adapter_object, dbus.PROPERTIES_IFACE)
 
+        logger.debug(f"set adapter {ADAPTER_IFACE} to be powered")
         self.adapter_props.Set(ADAPTER_IFACE, "Powered", dbus.Boolean(1))
+        logger.debug(f"set adapter {ADAPTER_IFACE} to be discoverable")
         self.adapter_props.Set(ADAPTER_IFACE, "Discoverable", dbus.Boolean(1))
+        logger.debug(f"set adapter {ADAPTER_IFACE} to be pairable")
         self.adapter_props.Set(ADAPTER_IFACE, "Pairable", dbus.Boolean(1))
 
         if alias is not None:

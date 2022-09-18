@@ -15,11 +15,13 @@ RUN apt-get install --no-install-recommends -y \
     libglib2.0-dev \
     libgirepository1.0-dev
 
-COPY . .
+COPY requirements.txt requirements.txt
 
 RUN pip3 install --no-build-isolation -r requirements.txt
 
 RUN apt-get remove build-essential cmake autoconf -y \
     && rm -rf /var/lib/apt/lists/*
+
+COPY . .
 
 CMD ["python3", "/usr/app/main.py"]
