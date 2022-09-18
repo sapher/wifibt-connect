@@ -1,11 +1,13 @@
-from asyncio.log import logger
-import dbus
+import logging
 import functools
+import dbus
 import dbus.service
 import dbus.mainloop.glib
 from ble.constants import BLUEZ_SERVICE_NAME, AGENT_MANAGER_IFACE, AGENT_IFACE
 
 AGENT_PATH = '/test/agent'
+
+logger = logging.getLogger('wfbt')
 
 
 class HeadlessAgent(dbus.service.Object):
@@ -14,6 +16,9 @@ class HeadlessAgent(dbus.service.Object):
     """
     @dbus.service.method(AGENT_IFACE, in_signature="", out_signature="")
     def Release(self):
+        """
+        Release
+        """
         print("Release")
 
 
@@ -36,7 +41,7 @@ def agent_main(mainloop, bus):
     """
     Headless agent main
     """
-    agent = HeadlessAgent(bus, AGENT_PATH)
+    _agent = HeadlessAgent(bus, AGENT_PATH)
 
     manager = dbus.Interface(bus.get_object(
         BLUEZ_SERVICE_NAME, '/org/bluez'), AGENT_MANAGER_IFACE)

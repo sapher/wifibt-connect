@@ -4,7 +4,6 @@ import logging
 import dbus
 import dbus.exceptions
 from ble.service_network import NetworkService
-from . import adapters
 from .constants import BLUEZ_SERVICE_NAME, DBUS_OM_IFACE, GATT_MANAGER_IFACE
 
 logger = logging.getLogger('wfbt')
