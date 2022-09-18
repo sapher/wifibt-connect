@@ -10,7 +10,7 @@ AGENT_PATH = '/test/agent'
 
 class HeadlessAgent(dbus.service.Object):
     """
-    Headless agent implementation
+    org.bluez.Agent1 interface implementation
     """
     @dbus.service.method(AGENT_IFACE, in_signature="", out_signature="")
     def Release(self):

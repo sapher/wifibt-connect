@@ -7,13 +7,12 @@ import dbus.mainloop.glib
 import dbus.service
 from .advertising import Advertisement
 
-from .constants import LE_ADVERTISING_MANAGER_IFACE, BLUEZ_SERVICE_NAME, DBUS_PROP_IFACE
-from . import adapters
+from .constants import LE_ADVERTISING_MANAGER_IFACE, BLUEZ_SERVICE_NAME
 
 logger = logging.getLogger('wfbt')
 
 
-class TestAdvertisement(Advertisement):
+class DeviceAdvertisement(Advertisement):
     """
     Advertisement class
     """
@@ -40,26 +39,15 @@ def register_ad_error_cb(mainloop, error):
     mainloop.quit()
 
 
-def advertising_main(mainloop, bus, adapter_name):
+def advertising_main(mainloop, bus, adapter):
     """
     Advertising main function
     """
-    adapter = adapters.find_adapter(
-        bus, LE_ADVERTISING_MANAGER_IFACE, adapter_name)
-    logger.info(f"adapter: {adapter}")
-    if not adapter:
-        raise Exception('LEAdvertisingManager1 interface not found')
-
-    adapter_props = dbus.Interface(bus.get_object(
-        BLUEZ_SERVICE_NAME, adapter), DBUS_PROP_IFACE)
-
-    adapter_props.Set("org.bluez.Adapter1", "Powered", dbus.Boolean(1))
-
     ad_manager = dbus.Interface(bus.get_object(
-        BLUEZ_SERVICE_NAME, adapter), LE_ADVERTISING_MANAGER_IFACE)
+        BLUEZ_SERVICE_NAME, adapter.get_path()), LE_ADVERTISING_MANAGER_IFACE)
 
-    test_advertisement = TestAdvertisement(bus, 0)
+    device_advertisement = DeviceAdvertisement(bus, 0)
 
-    ad_manager.RegisterAdvertisement(test_advertisement.get_path(), {},
+    ad_manager.RegisterAdvertisement(device_advertisement.get_path(), {},
                                      reply_handler=register_ad_cb,
                                      error_handler=functools.partial(register_ad_error_cb, mainloop))
