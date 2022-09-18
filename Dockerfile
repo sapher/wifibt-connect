@@ -19,6 +19,7 @@ COPY . .
 
 RUN pip3 install --no-build-isolation -r requirements.txt
 
-RUN apt-get remove build-essential cmake autoconf -y
+RUN apt-get remove build-essential cmake autoconf -y \
+    && rm -rf /var/lib/apt/lists/*
 
 CMD ["python3", "/usr/app/main.py"]

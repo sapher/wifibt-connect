@@ -1,16 +1,15 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 import signal
 import dbus
 from gi.repository import GLib
 import log
+from ble.adapter import Adapter
 from ble.advertising_main import advertising_main
 from ble.gatt_server_main import gatt_server_main
+from ble.agent_main import agent_main
+import os
 
-
-def bootstrap():
-    """
-    Entry point bootstrap function
-    """
+if __name__ == "__main__":
     logger = log.setup_custom_logger('wfbt')
     logger.info('wfbt started')
 
@@ -19,10 +18,14 @@ def bootstrap():
     bus = dbus.SystemBus()
     loop = GLib.MainLoop()
 
+    # Setup adapter
+    adapter_alias = os.getenv("ADAPTER_ALIAS")
+    adapter = Adapter(bus, adapter_alias)
+
     # Setup BLE services
-    adapter_name = ""
-    advertising_main(loop, bus, adapter_name)
-    gatt_server_main(loop, bus, adapter_name)
+    advertising_main(loop, bus, adapter)
+    gatt_server_main(loop, bus, adapter)
+    agent_main(loop, bus)
 
     # Trap sigint signal for program termination
     def ex(_sig, _frame):
@@ -30,7 +33,3 @@ def bootstrap():
     signal.signal(signal.SIGINT, ex)
 
     loop.run()
-
-
-if __name__ == "__main__":
-    bootstrap()
