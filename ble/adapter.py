@@ -17,6 +17,8 @@ class Adapter:
             self.adapter_object, dbus.PROPERTIES_IFACE)
 
         self.adapter_props.Set(ADAPTER_IFACE, "Powered", dbus.Boolean(1))
+        self.adapter_props.Set(ADAPTER_IFACE, "Discoverable", dbus.Boolean(1))
+        self.adapter_props.Set(ADAPTER_IFACE, "Pairable", dbus.Boolean(1))
 
         if alias is not None:
             self.adapter_props.Set(ADAPTER_IFACE, 'Alias', alias)
