@@ -9,7 +9,7 @@ def setup_custom_logger(name):
     Setup custom logger
     """
     formatter = logging.Formatter(
-        fmt='%(asctime)s - %(message)s', datefmt="%Y-%m-%d %H:%M:%S")
+        fmt='%(asctime)s - %(levelname)s - %(message)s', datefmt="%Y-%m-%d %H:%M:%S")
 
     handler = logging.StreamHandler()
     handler.setFormatter(formatter)
