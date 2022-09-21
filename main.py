@@ -29,6 +29,7 @@ if __name__ == "__main__":
 
     # Trap sigint signal for program termination
     def ex(_sig, _frame):
+        adapter.disable_adapter()
         loop.quit()
     signal.signal(signal.SIGINT, ex)
 

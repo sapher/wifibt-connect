@@ -23,6 +23,7 @@ def get_current_device(device_type: str):
     """
     Get current device by type
     """
+    logger.debug(f'get current device by type {device_type}')
     devices = get_devices_by_type(device_type)
     return None if len(devices) <= 0 else devices[0]
 
@@ -31,6 +32,7 @@ def get_all_wireless_connections():
     """
     Get all wireless connections
     """
+    logger.debug('get all wireless connection')
     wireless_connections = []
     connections = Settings.ListConnections()
     # filter connections
@@ -47,6 +49,7 @@ def delete_network_connection_by_uuid(uuid: str):
     """
     Delete network connection by UUID
     """
+    logger.info(f'delete network connection by id: {uuid}')
     connection = Settings.GetConnectionByUuid(uuid)
     return connection.Delete()
 
@@ -55,6 +58,7 @@ def add_wireless_connection(ssid: str, password: str):
     """
     Add wireless connection
     """
+    logger.info(f'add wireless connection for ssid: {ssid}')
     conn = {
         '802-11-wireless': {
             'ssid': ssid,

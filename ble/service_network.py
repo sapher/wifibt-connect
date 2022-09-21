@@ -257,7 +257,7 @@ class NetworkWirelessConfigurationCharacteristic(Characteristic):
         Characteristic.__init__(
             self, bus, index,
             self.CHRC_UUID,
-            ['secure-write'],
+            ['write'], # TODO: secure-write must be enabled
             service)
 
         self.value = []
@@ -267,6 +267,8 @@ class NetworkWirelessConfigurationCharacteristic(Characteristic):
     def WriteValue(self, value, _options):
         """
         Write value
+        it would be better to serialize wifi configuration value like this :
+        https://github.com/zxing/zxing/wiki/Barcode-Contents#wi-fi-network-config-android-ios-11
         """
         logger.info('write value to network wireless configuration')
         try:
@@ -276,11 +278,13 @@ class NetworkWirelessConfigurationCharacteristic(Characteristic):
             # TODO: Better extraction of values
             ssid = deep_get(parsed_values, 'ssid', None)
             if ssid is not None:
+                logger.debug(f"SSID: {ssid}")
                 if len(ssid) >= 1:
                     ssid = ssid[0]
 
             psk = deep_get(parsed_values, 'psk', None)
             if psk is not None:
+                logger.debug(f"password: {psk}")
                 if len(psk) >= 1:
                     psk = psk[0]
 
